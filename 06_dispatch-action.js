@@ -98,14 +98,15 @@ console.log('store_0 state after action SET_NAME:', store_0.getState())
 
 // Go to next tutorial: 07_dispatch-async-action-1.js
 
-/*
-{
+
+var data = {
     "id":"123",
     "author":{
         "id":"1",
-        "name":"Paul"
+        "name":"James"
     },
     "title":"My awesome blog post",
+    "content": "Lorem ipsum dolor sit amet",
     "comments":[
         {
             "id":"324",
@@ -116,7 +117,7 @@ console.log('store_0 state after action SET_NAME:', store_0.getState())
         }
     ]
 }
-*/
+
 
 import { normalize, schema } from 'normalizr';
 
@@ -134,4 +135,63 @@ const article = new schema.Entity('articles', {
     comments: [ comment ]
 });
 
-const normalizedData = normalize(originalData, article);
+const normalizedData = normalize(data, article);
+console.log('application data after a call to normalize', JSON.stringify(normalizedData, null, 2));
+/*
+{
+  result: "123",
+  entities: {
+    "articles": { 
+      "123": { 
+        id: "123",
+        author: "1",
+        title: "My awesome blog post",
+        comments: [ "324" ]
+      }
+    },
+    "users": {
+      "1": { "id": "1", "name": "Paul" },
+      "2": { "id": "2", "name": "Nicole" }
+    },
+    "comments": {
+      "324": { id: "324", "commenter": "2" }
+    }
+  }
+}
+*/
+
+var userReducer = function(state = {}, action) {
+    console.log('userReducer was called with state', state, 'and action', action)
+
+    switch (action.type) {
+        case 'SET_NAME':
+            return {
+                ...state,
+                name: action.name
+            }
+        default:
+            return state;
+    }
+}
+
+var articleReducer = function(state = {}, action) {
+    console.log('articleReducer was called with state', state, 'and action', action)
+    return state;
+}
+
+var commentReducer = function(state = {}, action) {
+    console.log('articleReducer was called with state', state, 'and action', action)
+    return state;
+}
+
+var reducer_2 = combineReducers({
+    users: userReducer,
+    articles: articleReducer,
+    comments: commentReducer
+})
+var store_1 = createStore(reducer_2)
+
+
+console.log("\n", '### It starts here')
+console.log('store_1 state after initialization:', store_1.getState())
+
