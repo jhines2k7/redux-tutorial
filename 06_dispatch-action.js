@@ -137,7 +137,8 @@ const article = new schema.Entity('articles', {
 
 const normalizedData = normalize(data, article);
 console.log('application data after a call to normalize', JSON.stringify(normalizedData, null, 2));
-/*
+
+/* normalized view of data
 {
   result: "123",
   entities: {
@@ -150,7 +151,7 @@ console.log('application data after a call to normalize', JSON.stringify(normali
       }
     },
     "users": {
-      "1": { "id": "1", "name": "Paul" },
+      "1": { "id": "1", "name": "James" },
       "2": { "id": "2", "name": "Nicole" }
     },
     "comments": {
@@ -160,11 +161,11 @@ console.log('application data after a call to normalize', JSON.stringify(normali
 }
 */
 
-var userReducer = function(state = {}, action) {
-    console.log('userReducer was called with state', state, 'and action', action)
+var authorReducer = function(state = {}, action) {
+    console.log('authorReducer was called with state', state, 'and action', action)
 
     switch (action.type) {
-        case 'SET_NAME':
+        case 'SET_AUTHOR_NAME':
             return {
                 ...state,
                 name: action.name
@@ -174,19 +175,28 @@ var userReducer = function(state = {}, action) {
     }
 }
 
-var articleReducer = function(state = {}, action) {
-    console.log('articleReducer was called with state', state, 'and action', action)
+var titleReducer = function(state = {}, action) {
+    console.log('titleReducer was called with state', state, 'and action', action)
+    
+    return state;
+}
+
+var contentReducer = function(state = {}, action) {
+    console.log('contentReducer was called with state', state, 'and action', action)
+    
     return state;
 }
 
 var commentReducer = function(state = {}, action) {
-    console.log('articleReducer was called with state', state, 'and action', action)
+    console.log('commentReducer was called with state', state, 'and action', action)
+    
     return state;
 }
 
 var reducer_2 = combineReducers({
-    users: userReducer,
-    articles: articleReducer,
+    author: authorReducer,
+    title: titleReducer,
+    content: contentReducer,
     comments: commentReducer
 })
 var store_1 = createStore(reducer_2)
@@ -195,3 +205,13 @@ var store_1 = createStore(reducer_2)
 console.log("\n", '### It starts here')
 console.log('store_1 state after initialization:', store_1.getState())
 
+var setAuthorNameActionCreator = function (name) {
+    return {
+        type: 'SET_AUTHOR_NAME',
+        name: name
+    }
+}
+
+store_1.dispatch(setAuthorNameActionCreator('Jim'))
+
+console.log('store_1 state after action SET_AUTHOR_NAME:', store_0.getState())
