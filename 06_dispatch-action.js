@@ -214,4 +214,4 @@ var setAuthorNameActionCreator = function (name) {
 
 store_1.dispatch(setAuthorNameActionCreator('Jim'))
 
-console.log('store_1 state after action SET_AUTHOR_NAME:', store_0.getState())
+console.log('store_1 state after action SET_AUTHOR_NAME:', store_1.getState())
