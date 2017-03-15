@@ -112,7 +112,7 @@ var data = {
             "id":"324",
             "commenter":{
                 "id":"2",
-                "name":"Nicole"
+                "name":"Nicole",
                 "content": "Comment 324. This is the content for comment 324"
             }
         },
@@ -120,7 +120,7 @@ var data = {
             "id":"325",
             "commenter":{
                 "id":"3",
-                "name":"Ricky"
+                "name":"Ricky",
                 "content": "Comment 325. This is the content for comment 325"
             }
         },
@@ -174,11 +174,11 @@ var authorReducer = function(state = {}, action) {
     console.log('authorReducer was called with state', state, 'and action', action)
 
     switch (action.type) {
-        case 'SET_AUTHOR_NAME':
+        case 'SET_AUTHOR':
             return {
                 ...state,
-                id: action.id
-                name: action.name
+                id: action.author.id,
+                name: action.author.name
             }
         default:
             return state;
@@ -273,10 +273,10 @@ var setCommentActionCreator = function (comment) {
     return {
         type: 'SET_COMMENT',
         comment: {
-            id: comment.id",
+            id: comment.id,
             commenter: {
                 id: comment.commenter.id,
-                name: comment.commenter.name
+                name: comment.commenter.name,
                 content: comment.commenter.content
             }
         }
