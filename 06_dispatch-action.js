@@ -192,7 +192,7 @@ var titleReducer = function(state = {}, action) {
         case 'SET_TITLE':
             return {
                 ...state,
-                title: action.name
+                title: action.title
             }
         default:
             return state;
@@ -245,7 +245,7 @@ var store_1 = createStore(reducer_2)
 console.log("\n", '### It starts here')
 console.log('store_1 state after initialization:', store_1.getState())
 
-var setAuthorNameActionCreator = function (author) {
+var setAuthorActionCreator = function (author) {
     return {
         type: 'SET_AUTHOR',
         author: {
@@ -284,6 +284,11 @@ var setCommentActionCreator = function (comment) {
 }
 
 // fire off a series of actions to build initial state
-store_1.dispatch(setAuthorNameActionCreator(data.author));
-
+store_1.dispatch(setAuthorActionCreator(data.author));
 console.log('store_1 state after action SET_AUTHOR:', store_1.getState())
+
+store_1.dispatch(setTitleActionCreator(data.title));
+console.log('store_1 state after action SET_TITLE:', store_1.getState())
+
+store_1.dispatch(setContentActionCreator(data.content));
+console.log('store_1 state after action SET_CONTENT:', store_1.getState())
