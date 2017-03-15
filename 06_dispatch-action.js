@@ -106,15 +106,24 @@ var data = {
         "name":"James"
     },
     "title":"My awesome blog post",
-    "content": "Lorem ipsum dolor sit amet",
+    "content": "This is the content for blog post 123. Lorem ipsum dolor sit amet",
     "comments":[
         {
             "id":"324",
             "commenter":{
                 "id":"2",
                 "name":"Nicole"
+                "content": "Comment 324. This is the content for comment 324"
             }
-        }
+        },
+        {
+            "id":"325",
+            "commenter":{
+                "id":"3",
+                "name":"Ricky"
+                "content": "Comment 325. This is the content for comment 325"
+            }
+        },
     ]
 }
 
@@ -168,6 +177,7 @@ var authorReducer = function(state = {}, action) {
         case 'SET_AUTHOR_NAME':
             return {
                 ...state,
+                id: action.id
                 name: action.name
             }
         default:
@@ -178,18 +188,48 @@ var authorReducer = function(state = {}, action) {
 var titleReducer = function(state = {}, action) {
     console.log('titleReducer was called with state', state, 'and action', action)
     
+    switch (action.type) {
+        case 'SET_TITLE':
+            return {
+                ...state,
+                title: action.name
+            }
+        default:
+            return state;
+    }
+
     return state;
 }
 
 var contentReducer = function(state = {}, action) {
     console.log('contentReducer was called with state', state, 'and action', action)
     
+    switch (action.type) {
+        case 'SET_CONTENT':
+            return {
+                ...state,
+                content: action.content
+            }
+        default:
+            return state;
+    }
+
     return state;
 }
 
-var commentReducer = function(state = {}, action) {
+var commentReducer = function(state = [], action) {
     console.log('commentReducer was called with state', state, 'and action', action)
     
+    switch (action.type) {
+        case 'SET_COMMENT':
+            return {
+                ...state,
+                comments: action.comment
+            }
+        default:
+            return state;
+    }
+
     return state;
 }
 
@@ -205,13 +245,45 @@ var store_1 = createStore(reducer_2)
 console.log("\n", '### It starts here')
 console.log('store_1 state after initialization:', store_1.getState())
 
-var setAuthorNameActionCreator = function (name) {
+var setAuthorNameActionCreator = function (author) {
     return {
         type: 'SET_AUTHOR_NAME',
-        name: name
+        author: {
+            id: author.id,
+            name: author.name
+        }
     }
 }
 
+var setTitleActionCreator = function (title) {
+    return {
+        type: 'SET_TITLE',
+        title: title
+    }
+}
+
+var setContentActionCreator = function (content) {
+    return {
+        type: 'SET_CONTENT',
+        content: content
+    }
+}
+
+var setCommentActionCreator = function (comment) {
+    return {
+        type: 'SET_COMMENT',
+        comment: {
+            "id":"324",
+            "commenter":{
+                "id":"2",
+                "name":"Nicole"
+                "content": "Comment 324. This is the content for comment 324"
+            }
+        }
+    }
+}
+
+// fire off a series of actions to build initial state
 store_1.dispatch(setAuthorNameActionCreator('Jim'))
 
 console.log('store_1 state after action SET_AUTHOR_NAME:', store_1.getState())
