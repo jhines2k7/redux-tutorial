@@ -273,11 +273,11 @@ var setCommentActionCreator = function (comment) {
     return {
         type: 'SET_COMMENT',
         comment: {
-            "id":"324",
-            "commenter":{
-                "id":"2",
-                "name":"Nicole"
-                "content": "Comment 324. This is the content for comment 324"
+            id: comment.id",
+            commenter: {
+                id: comment.commenter.id,
+                name: comment.commenter.name
+                content: comment.commenter.content
             }
         }
     }
