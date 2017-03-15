@@ -97,3 +97,41 @@ console.log('store_0 state after action SET_NAME:', store_0.getState())
 // ActionCreator -> Action -> dispatcher -> reducer
 
 // Go to next tutorial: 07_dispatch-async-action-1.js
+
+/*
+{
+    "id":"123",
+    "author":{
+        "id":"1",
+        "name":"Paul"
+    },
+    "title":"My awesome blog post",
+    "comments":[
+        {
+            "id":"324",
+            "commenter":{
+                "id":"2",
+                "name":"Nicole"
+            }
+        }
+    ]
+}
+*/
+
+import { normalize, schema } from 'normalizr';
+
+// Define a users schema
+const user = new schema.Entity('users');
+
+// Define your comments schema
+const comment = new schema.Entity('comments', {
+    commenter: user
+});
+
+// Define your article 
+const article = new schema.Entity('articles', { 
+    author: user,
+    comments: [ comment ]
+});
+
+const normalizedData = normalize(originalData, article);
