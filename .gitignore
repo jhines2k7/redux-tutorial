@@ -5,3 +5,4 @@ dist
 nested-dispatch.js
 test.js
 .idea
+*.swp

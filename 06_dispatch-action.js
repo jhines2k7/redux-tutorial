@@ -247,7 +247,7 @@ console.log('store_1 state after initialization:', store_1.getState())
 
 var setAuthorNameActionCreator = function (author) {
     return {
-        type: 'SET_AUTHOR_NAME',
+        type: 'SET_AUTHOR',
         author: {
             id: author.id,
             name: author.name
@@ -284,6 +284,6 @@ var setCommentActionCreator = function (comment) {
 }
 
 // fire off a series of actions to build initial state
-store_1.dispatch(setAuthorNameActionCreator('Jim'))
+store_1.dispatch(setAuthorNameActionCreator(data.author));
 
-console.log('store_1 state after action SET_AUTHOR_NAME:', store_1.getState())
+console.log('store_1 state after action SET_AUTHOR:', store_1.getState())
